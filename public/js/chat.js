@@ -75,10 +75,6 @@ socket.on('roomData', ({ room, users }) => {
 })
 
 
-
-
-
-
 $messageForm.addEventListener('submit', (e) => {
     e.preventDefault()
     $messageFormButton.setAttribute('disabled', 'disabled')
@@ -125,8 +121,11 @@ $sendLocationButton.addEventListener('click', () => {
 
 socket.emit('join', { username, room }, (error) => {
     if (error) {
-        ralert(error)
+        alert(error)
+
         location.href = "/"
+
+
 
     }
 

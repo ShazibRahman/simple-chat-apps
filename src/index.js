@@ -35,6 +35,11 @@ io.on('connection', (socket) => {
         if (error) {
             return callback(error)
         }
+        if (!user) {
+            return callback({
+                error: 'something went wrong'
+            })
+        }
 
 
         socket.join(user.room)
@@ -60,6 +65,11 @@ io.on('connection', (socket) => {
             return callback('Profanity is not allowed')
         }
         const user = getUser(socket.id)
+        if (!user) {
+            callback({
+                error: "something went wrong"
+            })
+        }
 
 
         io.to(user.room).emit('message', generateMessage(user.username, message))
