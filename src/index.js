@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
         }
         const user = getUser(socket.id)
         if (!user) {
-            callback({
+            return callback({
                 error: "something went wrong"
             })
         }
@@ -85,6 +85,8 @@ io.on('connection', (socket) => {
                 room: user.room,
                 users: getUsersInRoom(user.room)
             })
+
+
 
         }
 
