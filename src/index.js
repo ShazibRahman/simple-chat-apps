@@ -62,7 +62,10 @@ io.on('connection', (socket) => {
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter()
         if (filter.isProfane(message)) {
-            return callback('Profanity is not allowed')
+            socket.emit('abuseAlert')
+            return callback('profanity not allowed')
+
+
         }
         const user = getUser(socket.id)
         if (!user) {

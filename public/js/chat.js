@@ -74,6 +74,10 @@ socket.on('roomData', ({ room, users }) => {
     document.querySelector('#sidebar-1').innerHTML = html
 })
 
+socket.on('abuseAlert', () => {
+    alert('Thand rakh bhai')
+    $messageFormInput.value = ""
+})
 
 $messageForm.addEventListener('submit', (e) => {
     e.preventDefault()
