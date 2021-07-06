@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
         socket.join(user.room)
         socket.emit('message', generateMessage('Admin', 'welcome ' + user.username + ' to ' + user.room))
 
-        socket.broadcast.to(room).emit('message', generateMessage('Admin', `${user.username} has joined`))
+        socket.broadcast.to(user.room).emit('message', generateMessage('Admin', `${user.username} has joined`))
         // socket.emit ,io.emit , socket.broadcast.emit
         //io().to.emit -> specific room , socket.broadcast.to().emit -> all ecept itself in a room
         callback()
