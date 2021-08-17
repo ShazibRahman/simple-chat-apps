@@ -15,28 +15,6 @@ const sidebarTemplate = document.querySelector("#room-list").innerHTML
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
 
-const autoscroll = () => {
-    // New message element
-    const $newMessage = $messages.lastElementChild
-
-    // Height of the new message
-    const newMessageStyles = getComputedStyle($newMessage)
-    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
-    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
-
-    // Visible height
-    const visibleHeight = $messages.offsetHeight
-
-    // Height of messages container
-    const containerHeight = $messages.scrollHeight
-
-    // How far have I scrolled?
-    const scrollOffset = $messages.scrollTop + visibleHeight
-
-    if (containerHeight - newMessageHeight <= scrollOffset) {
-        $messages.scrollTop = $messages.scrollHeight
-    }
-}
 
 
 socket.on('message', (message_) => {
@@ -46,9 +24,33 @@ socket.on('message', (message_) => {
         message: message_.text,
         createdAt: moment(message_.createdAt).format('h:mm a')
     })
+
     $messages.insertAdjacentHTML('beforeend', html)
 
-    autoscroll()
+
+    if (username !== message_.username) {
+
+
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+        }
+
+        else if (Notification.permission === "granted") {
+            var notification = new Notification(message_.username, {
+                body: message_.text
+            });
+        }
+
+        else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === "granted") {
+                    var notification = new Notification(message_.username, {
+                        body: 'Hey check my location'
+                    });
+                }
+            });
+        }
+    }
 })
 
 socket.on('sendLocation', (message) => {
@@ -61,8 +63,29 @@ socket.on('sendLocation', (message) => {
 
     })
     $messages.insertAdjacentHTML('beforeend', html)
+    if (username !== message_.username) {
 
-    autoscroll()
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+        }
+
+        else if (Notification.permission === "granted") {
+            var notification = new Notification(message.username, {
+                body: message.url
+            });
+        }
+
+        else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === "granted") {
+                    var notification = new Notification(message.username, {
+                        body: message.url
+                    });
+                }
+            });
+        }
+
+    }
 })
 
 socket.on('roomData', ({ room, users }) => {
@@ -122,10 +145,10 @@ $sendLocationButton.addEventListener('click', () => {
 
 })
 
-
 socket.emit('join', { username, room }, (error) => {
     if (error) {
         alert(error)
+
 
         location.href = "/"
 
