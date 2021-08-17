@@ -14,7 +14,7 @@ const {
 } = require('./utils/users')
 const app = express()
 
-var httpsserver = https.createServer(app)
+var httpsserver = http.createServer(app)
 const io = socketio(httpsserver)
 
 
