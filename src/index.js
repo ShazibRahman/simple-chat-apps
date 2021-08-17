@@ -1,8 +1,11 @@
 const express = require('express')
 const path = require('path')
-const http = require('http')
+const https = require('https')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
+const fs = require('fs')
+const key = fs.readFileSync(path.join(__dirname, '../server.key'))
+const cert = fs.readFileSync(path.join(__dirname, '../server.cert'))
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const {
     addUser,
@@ -10,14 +13,14 @@ const {
     getUser,
     getUsersInRoom
 } = require('./utils/users')
-
 const app = express()
-const server = http.createServer(app)
-const io = socketio(server)
 
+var httpsserver = https.createServer({ key: key, cert: cert }, app)
+const io = socketio(httpsserver)
 
 
 const port = process.env.PORT || 3000
+
 const staticFilesDir = path.join(__dirname, '../public')
 
 app.use(express.json())
@@ -114,7 +117,7 @@ io.on('connection', (socket) => {
 
 
 
-server.listen(port, () => console.log('running on port ' + port))
+httpsserver.listen(port, () => console.log('running on port ' + port))
 
 
 
