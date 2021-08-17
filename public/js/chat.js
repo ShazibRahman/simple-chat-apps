@@ -28,7 +28,7 @@ socket.on('message', (message_) => {
     $messages.insertAdjacentHTML('beforeend', html)
 
 
-    if (username !== message_.username) {
+    if (username.toLowerCase() !== message_.username.toLowerCase()) {
 
 
         if (!("Notification" in window)) {
@@ -46,9 +46,9 @@ socket.on('message', (message_) => {
                 if (permission === "granted") {
                     var notification = new Notification(message_.username, {
                         body: 'Hey check my location'
-                    });
+                    })
                 }
-            });
+            })
         }
     }
 })
@@ -63,7 +63,8 @@ socket.on('sendLocation', (message) => {
 
     })
     $messages.insertAdjacentHTML('beforeend', html)
-    if (username !== message_.username) {
+
+    if (username.toLowerCase() !== message_.username.toLowerCase()) {
 
         if (!("Notification" in window)) {
             alert("This browser does not support desktop notification");
