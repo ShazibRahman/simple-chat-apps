@@ -1,11 +1,10 @@
 const express = require('express')
 const path = require('path')
-const https = require('https')
+const http = require('http')
+
 const socketio = require('socket.io')
 const Filter = require('bad-words')
-const fs = require('fs')
-const key = fs.readFileSync(path.join(__dirname, '../server.key'))
-const cert = fs.readFileSync(path.join(__dirname, '../server.cert'))
+
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const {
     addUser,
@@ -15,7 +14,7 @@ const {
 } = require('./utils/users')
 const app = express()
 
-var httpsserver = https.createServer({ key: key, cert: cert }, app)
+var httpsserver = https.createServer(app)
 const io = socketio(httpsserver)
 
 
