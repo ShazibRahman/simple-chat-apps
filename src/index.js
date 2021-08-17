@@ -4,6 +4,11 @@ const http = require('http')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 
+const myapp = express()
+myapp.get('*', (req, res) => {
+    res.redirect('https://' + req.headers.host + req.url)
+})
+
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const {
     addUser,
@@ -11,14 +16,11 @@ const {
     getUser,
     getUsersInRoom
 } = require('./utils/users')
-const { response } = require('express')
+
 const app = express()
 
 var httpsserver = http.createServer(app)
 const io = socketio(httpsserver)
-app.get('*', (req, res) => {
-    res.redirect('https://' + req.headers.host + req.url)
-})
 
 const port = process.env.PORT || 3000
 
