@@ -18,10 +18,17 @@ const {
 } = require('./utils/users')
 
 const app = express()
-
 var httpsserver = http.createServer(app)
 const io = socketio(httpsserver)
 
+const usehttps = (req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(['https://', req.get('Host'), req.url].join(''));
+    }
+    return next();
+
+}
+app.use(usehttps)
 const port = process.env.PORT || 3000
 
 const staticFilesDir = path.join(__dirname, '../public')
