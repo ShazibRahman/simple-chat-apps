@@ -3,12 +3,6 @@ const path = require('path')
 const http = require('http')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
-
-const myapp = express()
-myapp.get('*', (req, res) => {
-    res.redirect('https://' + req.headers.host + req.url)
-})
-
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const {
     addUser,
@@ -28,7 +22,7 @@ const usehttps = (req, res, next) => {
     return next();
 
 }
-app.use(usehttps)
+// app.use(usehttps)
 const port = process.env.PORT || 3000
 
 const staticFilesDir = path.join(__dirname, '../public')

@@ -18,7 +18,7 @@ const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true }
 
 
 socket.on('message', (message_) => {
-    console.log(message_)
+
     const html = Mustache.render(messageTemplate, {
         username: message_.username,
         message: message_.text,
@@ -37,7 +37,8 @@ socket.on('message', (message_) => {
 
         else if (Notification.permission === "granted") {
             var notification = new Notification(message_.username, {
-                body: message_.text
+                body: message_.text,
+                icon: './img/favicon.png'
             });
         }
 
@@ -45,7 +46,8 @@ socket.on('message', (message_) => {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
                     var notification = new Notification(message_.username, {
-                        body: 'Hey check my location'
+                        body: message_.text,
+                        icon: './img/favicon.png'
                     })
                 }
             })
@@ -72,7 +74,8 @@ socket.on('sendLocation', (message) => {
 
         else if (Notification.permission === "granted") {
             var notification = new Notification(message.username, {
-                body: message.url
+                body: message.url,
+                icon: './img/favicon.png'
             });
         }
 
@@ -80,10 +83,11 @@ socket.on('sendLocation', (message) => {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
                     var notification = new Notification(message.username, {
-                        body: message.url
-                    });
+                        body: message.url,
+                        icon: './img/favicon.png'
+                    })
                 }
-            });
+            })
         }
 
     }
