@@ -22,7 +22,7 @@ const usehttps = (req, res, next) => {
     return next();
 
 }
-// app.use(usehttps)
+app.use(usehttps)
 const port = process.env.PORT || 3000
 
 const staticFilesDir = path.join(__dirname, '../public')
