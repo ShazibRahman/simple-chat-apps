@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/styles.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
@@ -17,7 +17,15 @@
                 <label>Display name</label>
                 <input type="text" name="username" placeholder="Display name" required>
                 <label>Room</label>
+
                 <input type="text" name="room" placeholder="Room" required>
+                <div style="display: inline-flex;">
+                    <input type="checkbox"  style="margin-left: -3pc;margin-right: auto;" onchange="Myfunc(this)"> 
+                    <label style="margin-left: -1pc; margin-right: auto; text-decoration-style: solid; ">Do you want a password protected room</label>
+
+                </div>
+
+                <div id="divpass"></div>
                 <button>Join</button>
             </form>
 
@@ -25,7 +33,7 @@
         </div>
 
     </div>
-
+<script src="js/index.js"></script>
 </body>
 
 </html>

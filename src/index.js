@@ -32,8 +32,9 @@ let count = 0
 io.on('connection', (socket) => {
     console.log('new webSocketConnection');
 
-    socket.on('join', ({ username, room }, callback) => {
-        const { error, user } = addUser({ id: socket.id, username, room })
+    socket.on('join', ({ username, room ,password}, callback) => {
+        console.log(username , password , room);
+        const { error, user } = addUser({ id: socket.id, username, room ,password})
         if (error) {
             return callback(error)
         }
