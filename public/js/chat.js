@@ -1,5 +1,5 @@
 const socket = io()
-
+const audio = new Audio('https://assets.mixkit.co/sfx/download/mixkit-bubble-pop-up-alert-notification-2357.wav')
 
 const $messageForm = document.querySelector('#myForm')
 const $messageFormButton = $messageForm.querySelector('button')
@@ -40,6 +40,8 @@ socket.on('message', (message_) => {
                 body: message_.text,
                 icon: './img/favicon.png'
             });
+            audio.play()
+            setTimeout(() => notification.close(), 10*1000);
         }
 
         else if (Notification.permission !== "denied") {
@@ -49,6 +51,8 @@ socket.on('message', (message_) => {
                         body: message_.text,
                         icon: './img/favicon.png'
                     })
+                    audio.play()
+                    setTimeout(() => notification.close(), 10*1000);
                 }
             })
         }
@@ -77,6 +81,9 @@ socket.on('sendLocation', (message) => {
                 body: message.url,
                 icon: './img/favicon.png'
             });
+            audio.play()
+            setTimeout(() => notification.close(), 10*1000);
+
         }
 
         else if (Notification.permission !== "denied") {
@@ -86,6 +93,8 @@ socket.on('sendLocation', (message) => {
                         body: message.url,
                         icon: './img/favicon.png'
                     })
+                    audio.play()
+                    setTimeout(() => notification.close(), 10*1000);
                 }
             })
         }
