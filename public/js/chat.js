@@ -45,7 +45,7 @@ socket.on('message', (message_) => {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
                     var notification = new Notification(message_.username, {
-                        body: 'Hey check my location'
+                        body: message_.text
                     });
                 }
             });
