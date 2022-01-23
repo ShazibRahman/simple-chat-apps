@@ -18,7 +18,7 @@ const { username, room , password} = Qs.parse(location.search, { ignoreQueryPref
 
 
 socket.on('message', (message_) => {
-    console.log(message_)
+
     const html = Mustache.render(messageTemplate, {
         username: message_.username,
         message: message_.text,
@@ -28,7 +28,7 @@ socket.on('message', (message_) => {
     $messages.insertAdjacentHTML('beforeend', html)
 
 
-    if (username !== message_.username) {
+    if (username.toLowerCase() !== message_.username.toLowerCase()) {
 
 
         if (!("Notification" in window)) {
@@ -37,7 +37,8 @@ socket.on('message', (message_) => {
 
         else if (Notification.permission === "granted") {
             var notification = new Notification(message_.username, {
-                body: message_.text
+                body: message_.text,
+                icon: './img/favicon.png'
             });
         }
 
@@ -45,10 +46,11 @@ socket.on('message', (message_) => {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
                     var notification = new Notification(message_.username, {
-                        body: message_.text
-                    });
+                        body: message_.text,
+                        icon: './img/favicon.png'
+                    })
                 }
-            });
+            })
         }
     }
 })
@@ -63,7 +65,8 @@ socket.on('sendLocation', (message) => {
 
     })
     $messages.insertAdjacentHTML('beforeend', html)
-    if (username !== message_.username) {
+
+    if (username.toLowerCase() !== message_.username.toLowerCase()) {
 
         if (!("Notification" in window)) {
             alert("This browser does not support desktop notification");
@@ -71,7 +74,8 @@ socket.on('sendLocation', (message) => {
 
         else if (Notification.permission === "granted") {
             var notification = new Notification(message.username, {
-                body: message.url
+                body: message.url,
+                icon: './img/favicon.png'
             });
         }
 
@@ -79,10 +83,11 @@ socket.on('sendLocation', (message) => {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
                     var notification = new Notification(message.username, {
-                        body: message.url
-                    });
+                        body: message.url,
+                        icon: './img/favicon.png'
+                    })
                 }
-            });
+            })
         }
 
     }

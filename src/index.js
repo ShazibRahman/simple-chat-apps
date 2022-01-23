@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const http = require('http')
+var os = require('os')
 
 const socketio = require('socket.io')
 const Filter = require('bad-words')
@@ -12,11 +13,23 @@ const {
     getUser,
     getUsersInRoom
 } = require('./utils/users')
+
 const app = express()
 
 var httpsserver = http.createServer(app)
 const io = socketio(httpsserver)
 
+const usehttps = (req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(['https://', req.get('Host'), req.url].join(''));
+    }
+    return next();
+
+}
+if(os.hostname().toLocaleLowerCase()!="waadu"){
+    app.use(usehttps)
+
+}
 
 const port = process.env.PORT || 3000
 
@@ -33,7 +46,6 @@ io.on('connection', (socket) => {
     console.log('new webSocketConnection');
 
     socket.on('join', ({ username, room ,password}, callback) => {
-        console.log(username , password , room);
         const { error, user } = addUser({ id: socket.id, username, room ,password})
         if (error) {
             return callback(error)
