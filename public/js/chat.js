@@ -1,5 +1,5 @@
 const socket = io()
-const audio = new Audio('https://assets.mixkit.co/sfx/download/mixkit-bubble-pop-up-alert-notification-2357.wav')
+const audio = new Audio('https://embed.tawk.to/_s/v4/assets/audio/chat_sound.mp3')
 
 const $messageForm = document.querySelector('#myForm')
 const $messageFormButton = $messageForm.querySelector('button')
