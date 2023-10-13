@@ -26,7 +26,7 @@ const usehttps = (req, res, next) => {
     return next();
 
 }
-if(os.hostname().toLocaleLowerCase()!="waadu"){
+if (os.hostname().toLocaleLowerCase() != "waadu") {
     app.use(usehttps)
 
 }
@@ -45,8 +45,8 @@ let count = 0
 io.on('connection', (socket) => {
     console.log('new webSocketConnection');
 
-    socket.on('join', ({ username, room ,password}, callback) => {
-        const { error, user } = addUser({ id: socket.id, username, room ,password})
+    socket.on('join', ({ username, room, password }, callback) => {
+        const { error, user } = addUser({ id: socket.id, username, room, password })
         if (error) {
             return callback(error)
         }
